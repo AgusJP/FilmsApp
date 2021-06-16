@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Favorites</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar #searcher2 (ionChange)="search($event)" debounce="1000"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="user$ | async as user" [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="getData($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-spinner *ngIf="spinner"
+    style="display: block; position: absolute; top: 0; left: 0; right: 0; bottom: 0; margin: auto" name="dots">
+  </ion-spinner>
+
+  <ion-card
+    style="border-radius:20px; margin-bottom:10px; margin-top:10px; margin-left:auto; margin-right:auto; width:90%;"
+    *ngFor="let eachmedia of Media">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-icon *ngIf="eachmedia.Type==='movie'" style="zoom:2.0;color:white" src="assets/icon/film.svg"></ion-icon>
+        <ion-icon *ngIf="eachmedia.Type==='series'" style="zoom:2.0;color:black" src="assets/icon/serie.svg"></ion-icon>
+        <ion-icon *ngIf="eachmedia.Type==='game'" style="zoom:2.0;color:blueviolet" src="assets/icon/juegos.svg">
+        </ion-icon>
+        {{eachmedia.Year}}
+      </ion-card-subtitle>
+      <ion-card-title>{{eachmedia.Title}}</ion-card-title>
+    </ion-card-header>
+    <ion-img *ngIf="eachmedia.Poster !='N/A'" [src]="eachmedia.Poster"></ion-img>
+    <div style="display:flex; flex-direction:row; justify-content:space-evenly; align-items:center; padding:10px;">
+      <ion-icon (click)="socialShare(eachmedia)" name="share-social-outline" style="zoom:2.0; color:black"></ion-icon>
+      <ion-icon (click)="presentAlertConfirm(eachmedia)" name="trash-outline" style="zoom:2.0; color: #E86161; "></ion-icon>
+    </div>
+  </ion-card>
+
+
+</ion-content>

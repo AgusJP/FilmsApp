@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Verification </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="user$ | async as user">
+
+  <ion-card  style = "margin: 10vh 1vh 2vh 1vh">
+    <ion-card-header>
+      <ion-card-title>
+        Thank you for Registering!
+      </ion-card-title>
+      <ion-card-subtitle>We have sent a confirmation email to <strong>{{user.email}}</strong>
+        Please check your email and click on the link to verify your email address.</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" expand="block" (click)="onSendEmail()"
+          >Resend verification email</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-card>
+
+
+</ion-content>

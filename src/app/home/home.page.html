@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{home}}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+     <ion-searchbar #searcher debounce="1000" (ionChange)="callLoad()"></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" [value]="valueSelected">
+      <ion-segment-button value="all">
+        <ion-label>{{"ALL"| translate}}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="films">
+        <ion-label>{{"PELICULAS"| translate}}</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="series">
+        <ion-label>Series</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="callLoad2($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  
+  <div *ngIf="this.valueSelected == 'all'" style="margin-top:15px">
+  <ion-card style="border-radius:20px; margin-bottom:10px; margin-top:10px; margin-left:auto; margin-right:auto; width:90%;" *ngFor="let eachmedia of all">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-icon *ngIf="eachmedia.Type==='movie'" style="zoom:2.0;color:black" src="assets/icon/film.svg"></ion-icon>
+        <ion-icon *ngIf="eachmedia.Type==='series'" style="zoom:2.0;color:black" src="assets/icon/serie.svg"></ion-icon>
+        <ion-icon *ngIf="eachmedia.Type==='game'" style="zoom:2.0;color:blueviolet" src="assets/icon/juegos.svg"></ion-icon>
+        <ion-icon (click)="presentModal(eachmedia)" class="info" name="information-circle-outline"></ion-icon>
+      </ion-card-subtitle>
+      <ion-card-title>{{eachmedia.Title}}</ion-card-title>
+    </ion-card-header>
+    <ion-img *ngIf="eachmedia.Poster !='N/A'" [src]="eachmedia.Poster"></ion-img>
+    <ion-icon  *ngIf="user$ | async as user" (click)="saveData(eachmedia, user.uid)" class="iconToggle" src="assets/icon/love.svg" style="zoom:2.0; margin-left: 41.5%; padding: 5px;"></ion-icon>
+  </ion-card>
+</div>
+  
+<div style="margin-top:15px" *ngIf="this.valueSelected == 'films'">
+  <ion-card style="border-radius:20px; margin-bottom:10px; margin-top:10px; margin-left:auto; margin-right:auto; width:90%;" *ngFor="let film of films">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-icon style="zoom:2.0;color:white" src="assets/icon/film.svg"></ion-icon>
+        {{film.Year}}
+        <ion-icon (click)="presentModal(film)" class="info" name="information-circle-outline"></ion-icon>
+      </ion-card-subtitle>
+      <ion-card-title>{{film.Title}}</ion-card-title>
+    </ion-card-header>
+    <ion-img *ngIf="film.Poster !='N/A'" [src]="film.Poster"></ion-img>
+    <ion-icon id="film.imdbID" *ngIf="user$ | async as user" (click)="saveData(film, user.uid)" class="iconToggle" src="assets/icon/love.svg" style="zoom:2.0; margin-left: 41.5%; padding: 5px;"></ion-icon>
+  </ion-card>
+</div>
+
+<div style="margin-top:15px" *ngIf="this.valueSelected == 'series'">
+  <ion-card style="border-radius:20px; margin-bottom:10px; margin-top:10px; margin-left:auto; margin-right:auto; width:90%;" *ngFor="let serie of series">
+    <ion-card-header>
+      <ion-card-subtitle>
+        <ion-icon style="zoom:2.0;color:black" src="assets/icon/serie.svg"></ion-icon>
+        {{serie.Year}}
+        <ion-icon (click)="presentModal(serie)" class="info" name="information-circle-outline"></ion-icon>
+      </ion-card-subtitle>
+      <ion-card-title>{{serie.Title}}</ion-card-title>
+    </ion-card-header>
+    <ion-img *ngIf="serie.Poster !='N/A'" [src]="serie.Poster"></ion-img>
+    <ion-icon id="serie.imdbID" *ngIf="user$ | async as user" (click)="saveData(serie, user.uid)" class="iconToggle" src="assets/icon/love.svg" style="zoom:2.0; margin-left: 41.5%; padding: 5px;"></ion-icon>
+  </ion-card>
+</div>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="callLoadInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+</ion-content>

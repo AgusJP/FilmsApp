@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title style ="text-align: center;">Login User</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ <form>
+   <ion-item lines="full" style = "margin: 10vh 1vh 2vh 1vh">
+     <ion-label position="floating">Email</ion-label>
+     <ion-input type="text" #email required></ion-input>
+   </ion-item>
+   <ion-item lines="full" style = "margin: 2vh 1vh 2vh 1vh">
+    <ion-label position="floating">Password</ion-label>
+    <ion-input type="password" #password required></ion-input>
+  </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" (click)="onLogin(email, password)"  
+        expand="block">Login</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="ion-text-end">
+          <a style="text-decoration:none; display:block;text-align:center" routerLink="/forgot-password">Forgot password? </a>
+        </p>
+      </ion-col>
+    </ion-row>
+
+    <span style ="display:block; text-align: center" class="divider line one-line"> or </span>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="danger" (click)="onLoginGoogle()" (click)="presentToast()"
+        expand="block"><ion-icon name="logo-google"></ion-icon>&nbsp;&nbsp;&nbsp;&nbsp;Login with Google</ion-button>
+      </ion-col>
+    </ion-row>
+ </form>
+
+ <ion-row>
+  <ion-col>
+    <p class="ion-text-end">
+      <a style="text-decoration:none; display:block;text-align:center" routerLink="/register">Create an account </a>
+    </p>
+  </ion-col>
+</ion-row>
+
+</ion-content>

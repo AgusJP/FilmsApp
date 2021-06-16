@@ -1,4 +1,11 @@
+import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
+import { User } from './shared/user.interface';
+import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -6,13 +13,25 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   public appPages = [
-    { title: 'Inbox', url: '/folder/Inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/Outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/Favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/Trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/Spam', icon: 'warning' },
+    { title: 'Sign out', url: '/login', icon: 'log-out' },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {}
+
+  user$: Observable<User> = this.authSvc.afAuth.user;
+
+  constructor(private authSvc: AuthService, private router: Router, private translateService: TranslateService) {
+    this.translateService.setDefaultLang('English')
+    this.translateService.addLangs(['English', 'Español'])
+  }
+
+
+  async logout(): Promise<void> {
+    try {
+      this.authSvc.logout();
+      this.router.navigate(['login']);
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
 }

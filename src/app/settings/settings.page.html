@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ <ion-item>
+  <ion-icon slot="start" name="moon-outline"></ion-icon>
+   <ion-label>{{"MODOOSCURO"| translate}}</ion-label>
+   <ion-toggle slot="end" (ionChange)="toggleTheme($event)"> </ion-toggle>
+ </ion-item>
+ <ion-item>
+  <ion-icon slot="start" name="language-outline"></ion-icon>
+  <ion-label>{{"IDIOMA"| translate}}</ion-label>
+   <ion-select cancelText="Cancel" [(ngModel)]="idioma" placeholder="Select..." (ionChange)="changeLang($event)">
+     <ion-select-option *ngFor="let lang of langs">{{lang}}</ion-select-option>
+   </ion-select>
+ </ion-item>
+</ion-content>

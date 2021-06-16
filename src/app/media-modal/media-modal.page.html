@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Info about Media</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon (click)="closeModal()" name="close-circle-outline" style="zoom:2.0"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <div class="back" style="margin:10px">{{"TITULO"| translate}}: {{name}} &nbsp;&nbsp;&nbsp;{{"FECHA"| translate}}: {{year}}</div>
+
+  <div  style="margin:10px">{{"RESUMEN"| translate}}: {{plot}}</div>
+
+  <div  style="margin:10px">Director: {{director}}</div>
+
+  <div  style="margin:10px">{{"ACTORES"| translate}}: {{actors}}</div>
+
+  <ion-img class="img" *ngIf="img !='N/A'" [src]="img"></ion-img>
+
+  <div  class="back" style="margin:10px">{{"DURACION"| translate}}: {{runtime}}</div>
+
+  <div class="align" style="display:flex; flex-direction:row; justify-content:center; align-items:center; margin:10px;">
+     <ion-icon style="color:#F79E1E; margin-bottom: 3px;" name="star-outline"></ion-icon> &nbsp;
+      {{rating}}
+  </div>
+
+</ion-content>
